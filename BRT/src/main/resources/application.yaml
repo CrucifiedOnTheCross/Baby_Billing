@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: BRT
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.brt.changelog-master.yaml
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+  datasource:
+    url: jdbc:postgresql://postgres-brt:5432/brt-database
+    driver-class-name: org.postgresql.Driver
+    username: brt_admin
+    password: brt_admin
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: quest
+    password: quest
+server:
+  port: 8081
+
+rabbitmq:
+  queue: call_queue
+
+hrs:
+  uri:
+    calculate: http://hrs-service:8082/api/call/calculate-cost
+    params: http://hrs-service:8082/api/tariff/

@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: init-crm
+      author: Nick
+      failOnError: true
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            path: db/changelog/sql/init-crm.sql

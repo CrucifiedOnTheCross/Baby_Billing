@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: init-hrs
+      author: Nick
+      failOnError: true
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            path: db/changelog/sql/init-hrs.sql
+  - changeSet:
+      id: add-tariff
+      author: Nick
+      failOnError: true
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            path: db/changelog/sql/add-tariff.sql

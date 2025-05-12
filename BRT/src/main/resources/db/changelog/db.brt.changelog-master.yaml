@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: init
+      author: Nick
+      failOnError: true
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            path: db/changelog/sql/init.sql
+        - sqlFile:
+            dbms: postgresql
+            path: db/changelog/sql/insert-clients-and-tariff.sql
+        - sqlFile:
+            dbms: postgresql
+            path: db/changelog/sql/insert-calls-status.sql

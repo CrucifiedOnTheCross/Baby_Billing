@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: init
+      author: Nick
+      failOnError: true
+      validCheckSum: ANY
+      changes:
+        - sqlFile:
+            dbms: h2
+            path: db/changelog/sql/init.sql
+
+  - changeSet:
+      id: insert-users
+      author: Nick
+      context: dev
+      runOnChange: true
+      failOnError: true
+      validCheckSum: ANY
+      changes:
+        - sqlFile:
+            dbms: h2
+            path: db/changelog/sql/insert-users.sql
+
+  - changeSet:
+      id: insert-users-not-romashka
+      author: Nick
+      context: dev
+      runOnChange: true
+      failOnError: true
+      validCheckSum: ANY
+      changes:
+        - sqlFile:
+            dbms: h2
+            path: db/changelog/sql/insert-not-romashka-user.sql

@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BRT.main.iml" filepath="$PROJECT_DIR$/.idea/modules/BRT.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/Baby Billing.iml" filepath="$PROJECT_DIR$/Baby Billing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CDR.main.iml" filepath="$PROJECT_DIR$/.idea/modules/CDR.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CRM.main.iml" filepath="$PROJECT_DIR$/.idea/modules/CRM.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/HRS.main.iml" filepath="$PROJECT_DIR$/.idea/modules/HRS.main.iml" />
     </modules>
   </component>
 </project>

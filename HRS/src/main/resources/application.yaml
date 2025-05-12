@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: HRS
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.hrs.changelog-master.yaml
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+  datasource:
+    url: jdbc:postgresql://postgres-hrs:5432/hrs-database
+    driver-class-name: org.postgresql.Driver
+    username: hrs_admin
+    password: hrs_admin
+
+brt:
+  api:
+    url: http://brt-service:8081
+
+server:
+  port: 8082

@@ -1,0 +1,145 @@
+version: "3.9"
+
+services:
+  # Сервис CDR
+  cdr-service:
+    build:
+      context: ./CDR
+      dockerfile: Dockerfile
+    container_name: cdr-service
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/data
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+    depends_on:
+      - rabbitmq
+    restart: unless-stopped
+    networks:
+      - myNetwork
+
+  # Сервис BRT
+  brt-service:
+    build:
+      context: ./BRT  # Путь к модулю BRT
+      dockerfile: Dockerfile
+    container_name: brt-service
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-brt:5432/brt-database
+      SPRING_RABBITMQ_HOST: rabbitmq  # Указание хоста RabbitMQ
+    depends_on:
+      - postgres-brt
+    restart: unless-stopped
+    networks:
+      - myNetwork
+
+  # Сервис HRS
+  hrs-service:
+    build:
+      context: ./HRS  # Путь к модулю HRS
+      dockerfile: Dockerfile
+    container_name: hrs-service
+    ports:
+      - "8082:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-hrs:5432/hrs-database
+      SPRING_RABBITMQ_HOST: rabbitmq
+    depends_on:
+      - postgres-hrs
+    restart: unless-stopped
+    networks:
+      - myNetwork
+
+  # Сервис CRM
+  crm-service:
+    build:
+      context: ./CRM  # Путь к модулю CRM
+      dockerfile: Dockerfile
+    container_name: crm-service
+    ports:
+      - "8083:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-crm:5432/crm-database
+      SPRING_RABBITMQ_HOST: rabbitmq
+    depends_on:
+      - postgres-crm
+    restart: unless-stopped
+    networks:
+      - myNetwork
+
+  # Сервис RabbitMQ
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - myNetwork
+
+  # Сервис PostgreSQL для BRT
+  postgres-brt:
+    image: postgres:latest
+    container_name: postgres-brt
+    environment:
+      POSTGRES_USER: brt_admin
+      POSTGRES_PASSWORD: brt_admin
+      POSTGRES_DB: brt-database
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_brt_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - myNetwork
+
+  # Сервис PostgreSQL для HRS
+  postgres-hrs:
+    image: postgres:latest
+    container_name: postgres-hrs
+    environment:
+      POSTGRES_USER: hrs_admin
+      POSTGRES_PASSWORD: hrs_admin
+      POSTGRES_DB: hrs-database
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_hrs_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - myNetwork
+
+  # Сервис PostgreSQL для CRM
+  postgres-crm:
+    image: postgres:latest
+    container_name: postgres-crm
+    environment:
+      POSTGRES_USER: crm_admin
+      POSTGRES_PASSWORD: crm_admin
+      POSTGRES_DB: crm-database
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_crm_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - myNetwork
+
+volumes:
+  postgres_brt_data:
+  postgres_hrs_data:
+  postgres_crm_data:
+  rabbitmq_data:
+
+networks:
+  myNetwork:
+    driver: bridge
